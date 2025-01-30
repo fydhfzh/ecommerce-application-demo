@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "/order_proto";
+
+message OrderRequest {
+    string product_id = 1;
+    uint32 quantity = 2;
+}
+
+message OrderResponse {
+    string product_id = 1;
+    uint32 quantity = 2;
+    uint32 total_price = 3;
+    string status = 4;
+}
+
+service OrderService {
+    rpc CreateOrder (OrderRequest) returns (OrderResponse);
+}

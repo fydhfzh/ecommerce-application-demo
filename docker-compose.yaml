@@ -1,0 +1,168 @@
+services:
+  broker-service:
+    build:
+      context: ./broker-service
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+
+  user-service:
+    depends_on:
+      user-db:
+        condition: service_healthy
+        restart: true
+    ports:
+      - 8081:8080
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+
+  auth-service:
+    depends_on:
+      broker-service:
+        condition: service_started
+        restart: true
+    ports:
+      - 50051:50051
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+
+  # logger-service:
+  #   depends_on:
+  #     mongodb:
+  #       condition: service_started
+  #       restart: true
+  #   build:
+  #     context: ./logger-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 8082:8080
+
+  # product-command-service:
+  #   depends_on:
+  #     product-db:
+  #       condition: service_healthy
+  #       restart: true
+  #   build:
+  #     context: ./product-command-service
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - 50051:50051
+
+  # product-events-service:
+  #   depends_on:
+  #     elasticsearch:
+  #       condition: service_healthy
+  #       restart: true
+  #   build:
+  #     context: ./product-events-service
+  #     dockerfile: Dockerfile
+
+  # product-query-service:
+  #   depends_on:
+  #     elasticsearch:
+  #       condition: service_healthy
+  #       restart: true
+  #   build:
+  #     context: ./product-query-service
+  #     dockerfile: Dockerfile
+
+  # mongodb:
+  #   image: mongo:latest
+  #   ports:
+  #     - 27017:27017
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=fydhfzh
+  #     - MONGO_INITDB_ROOT_PASSWORD=fydhfzh
+  #     - MONGO_INITDB_DATABASE=ecommerce_application
+  #   volumes:
+  #     - ./dockervol/mongodb:/data/db
+
+  # product-db:
+  #   image: postgres:latest
+  #   ports:
+  #     - 5432:5432
+  #   environment:
+  #     - PGUSER=fydhfzh
+  #     - POSTGRES_USER=fydhfzh
+  #     - POSTGRES_PASSWORD=fydhfzh
+  #     - POSTGRES_DB=ecommerce_application
+  #   volumes:
+  #     - ./dockervol/product-db:/var/lib/postgres/data
+  #   healthcheck:
+  #     test: 'pg_isready -U fydhfzh -d ecommerce_application'
+  #     interval: 30s
+  #     timeout: 60s
+  #     retries: 5
+  #     start_period: 80s
+
+  user-db:
+    image: postgres:latest
+    ports:
+      - 5433:5432
+    environment:
+      - PGUSER=fydhfzh
+      - POSTGRES_USER=fydhfzh
+      - POSTGRES_PASSWORD=fydhfzh
+      - POSTGRES_DB=ecommerce_application
+    volumes:
+      - ./dockervol/user-db:/var/lib/postgres/data
+    healthcheck:
+      test: 'pg_isready -U fydhfzh -d ecommerce_application'
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+
+  # kafka:
+  #   image: bitnami/kafka:latest
+  #   container_name: kafka
+  #   hostname: kafka
+  #   ports:
+  #     - 9092:9092
+  #   volumes:
+  #     - ./dockervol/kafka:/bitnami/kafka
+  #   environment:
+  #     - TZ=Asia/Jakarta
+  #     - KAFKA_CFG_NODE_ID=0
+  #     - KAFKA_CFG_PROCESS_ROLES=controller,broker
+  #     - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+  #     - KAFKA_CFG_LISTENERS=PLAINTEXT://:19092,PLAINTEXT_HOST://:9092,CONTROLLER://:9093
+  #     - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:19092,PLAINTEXT_HOST://localhost:9092
+  #     - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+  #     - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+  #     - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+
+  # kafka-ui:
+  #   image: provectuslabs/kafka-ui:latest
+  #   container_name: kafka-ui
+  #   hostname: kafka-ui
+  #   ports:
+  #     - 8083:8080
+  #   environment:
+  #     TZ: Asia/Jakarta
+  #     KAFKA_CLUSTERS_0_NAME: local
+  #     KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:19092
+
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+  #   container_name: elasticsearch
+  #   hostname: elasticsearch
+  #   ports:
+  #     - 9200:9200
+  #   healthcheck:
+  #     test: ['CMD-SHELL', 'curl --fail localhost:9200 || exit 1']
+  #     interval: 10s
+  #     retries: 3
+  #     timeout: 3s
+  #   volumes:
+  #     - ./dockervol/elasticsearch:/usr/share/elasticsearch/data
+  #   environment:
+  #     - node.name=es01
+  #     - cluster.name=cluster-1
+  #     - xpack.security.enabled=false
+  #     - discovery.type=single-node
+  #     - bootstrap.memory_lock=true
+  #     - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+  #     - cluster.routing.allocation.disk.threshold_enabled=false

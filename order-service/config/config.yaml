@@ -1,0 +1,8 @@
+application:
+  gRpcPort: 50051
+order-db:
+  host: order-db
+  port: 5432
+  user: fydhfzh
+  password: fydhfzh
+  dbName: ecommerce_application

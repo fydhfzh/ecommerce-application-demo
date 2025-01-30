@@ -1,0 +1,9 @@
+application:
+  port: 8080
+mongodb:
+  host: mongodb
+  port: 27017
+  username: fydhfzh
+  password: fydhfzh
+  dbName: ecommerce_application
+  dbCollection: logs

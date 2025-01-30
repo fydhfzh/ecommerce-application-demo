@@ -1,0 +1,48 @@
+basePath: /api/v1
+definitions:
+  dto.APIResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: string
+      status_code:
+        type: integer
+    type: object
+  dto.BrokerRequest:
+    properties:
+      action:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is ecommerce application example
+  title: e-commerce application
+  version: "1.0"
+paths:
+  /broker:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint can be hit as a test
+      parameters:
+      - description: Broker Action
+        in: body
+        name: action
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BrokerRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.APIResponse'
+      summary: Test endpoint
+      tags:
+      - broker
+swagger: "2.0"

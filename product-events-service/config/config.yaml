@@ -1,0 +1,10 @@
+application:
+  port: 8080
+kafka:
+  host: kafka
+  port: 19092
+  topicName: product
+elasticsearch:
+  host: elasticsearch
+  port: 9200
+  indexName: products

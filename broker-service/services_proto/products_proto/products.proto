@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package products;
+
+option go_package = "/products_proto";
+
+message ProductSaveRequest{
+    string name = 1;
+    string description = 2;
+    uint32 stock = 3;
+}
+
+message ProductUpdateRequest{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    uint32 stock = 4;
+}
+
+message ProductResponse{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    uint32 stock = 4;
+    string created_at = 5;
+    string updated_at = 6;
+}
+
+service ProductService {
+    rpc Save(ProductSaveRequest) returns (ProductResponse);
+    rpc Update(ProductUpdateRequest) returns (ProductResponse);
+}

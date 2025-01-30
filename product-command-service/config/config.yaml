@@ -1,0 +1,11 @@
+application:
+  gRpcPort: 50051
+postgresql:
+  host: product-db
+  port: 5432
+  username: fydhfzh
+  password: fydhfzh
+  dbName: ecommerce_application
+kafka:
+  topicName: product
+  port: 19092

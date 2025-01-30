@@ -1,0 +1,8 @@
+application:
+  rpcPort: 5001
+postgresql:
+  host: user-db
+  port: 5432
+  user: fydhfzh
+  password: fydhfzh
+  dbName: ecommerce_application

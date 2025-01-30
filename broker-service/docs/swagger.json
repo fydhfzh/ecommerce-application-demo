@@ -1,0 +1,74 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is ecommerce application example",
+        "title": "e-commerce application",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/api/v1",
+    "paths": {
+        "/broker": {
+            "post": {
+                "description": "This endpoint can be hit as a test",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "broker"
+                ],
+                "summary": "Test endpoint",
+                "parameters": [
+                    {
+                        "description": "Broker Action",
+                        "name": "action",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.BrokerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.APIResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/dto.APIResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.APIResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "status_code": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.BrokerRequest": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

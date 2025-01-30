@@ -1,0 +1,82 @@
+### Test broker
+POST http://localhost:8080/api/v1/broker
+Content-Type: application/json
+
+{
+    "action": "broker"
+}
+
+### Insert log
+POST http://localhost:8081/api/v1
+Content-Type: application/json
+
+{
+    "content": "broker hit!"
+}
+
+### Get all logs
+GET http://localhost:8081/api/v1
+
+
+### Get all products
+GET http://localhost:8080/api/v1/products
+
+### Get product by id
+GET http://localhost:8080/api/v1/products/zghNVJQBozvts-lAMrbq
+
+### Broker handle products post request
+POST http://localhost:8080/api/v1/products
+Content-Type: application/json
+
+{
+    "name": "Pucuk Harum",
+    "description": "Teh",
+    "stock": 201
+}
+
+### Broker handle products put request (TODO)
+PUT http://localhost:8080/api/v1/products/38ddea27-74a7-4511-adf5-85c96241cfd7
+Content-Type: application/json
+
+{
+    "name": "Pucuk Harum Besar",
+    "description": "Teh terbaik malaysia",
+    "stock": 300
+}
+
+### Get all products directly from elasticsearch
+GET http://localhost:9200/products/_search?pretty=true
+
+
+### Delete all products directly from elasticsearch
+POST http://localhost:9200/products/_delete_by_query
+Content-Type: application/json
+
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+### Create new user
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+    "email": "fayyadhhafizh2@gmail.com",
+    "password": "test",
+    "fullname": "Fayyadh Hafizh",
+    "age": 22
+}
+
+### Get user by email
+GET http://localhost:8080/api/v1/users?email=fayyadhhafizh2@gmail.com
+
+### Authenticate user
+POST http://localhost:8080/api/v1/auth/signin
+Content-Type: application/json
+
+{
+    "email": "fayyadhhafizh5@gmail.com",
+    "password": "test123"
+}

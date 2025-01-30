@@ -1,0 +1,5 @@
+application:
+  gRpcPort: 50051
+user-service:
+  host: user-service
+  rpcPort: 5001

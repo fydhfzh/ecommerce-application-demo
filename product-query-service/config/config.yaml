@@ -1,0 +1,6 @@
+application:
+  rpcPort: 5001
+elasticsearch:
+  host: elasticsearch
+  port: 9200
+  indexName: products
